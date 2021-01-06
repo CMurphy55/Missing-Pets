@@ -7,7 +7,7 @@ android {
     buildToolsVersion "30.0.2"
 
     defaultConfig {
-        applicationId "com.example.missingpetz"
+        applicationId "com.example.missing_pets"
         minSdkVersion 29
         targetSdkVersion 30
         versionCode 1
