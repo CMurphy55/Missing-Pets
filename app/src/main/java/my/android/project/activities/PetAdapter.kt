@@ -10,13 +10,24 @@ import my.android.project.helpers.readImageFromPath
 import my.android.project.models.PetModel
 import org.wit.placemark.R
 
-interface PetListener {
-  fun onPetClick(pet: PetModel)
+class Dominant constructor(itemView: View) : RecyclerView.ViewHolder(itemView) {
+
+  fun bind(pet: PetModel, listener: Adapter.PetListener) {
+    itemView.petTitle.text = pet.title
+    itemView.description.text = pet.description
+    itemView.imageIcon.setImageBitmap(
+      readImageFromPath(
+        itemView.context,
+        pet.image
+      )
+    )
+    itemView.setOnClickListener { listener.onPetClick(pet) }
+  }
 }
 
-class PetAdapter constructor(private var pets: List<PetModel>,
+class Adapter constructor(private var pets: List<PetModel>,
                              private val listener: PetListener
-) : RecyclerView.Adapter<PetAdapter.MainHolder>() {
+) : RecyclerView.Adapter<Adapter.MainHolder>() {
 
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainHolder {
     return MainHolder(
@@ -29,6 +40,10 @@ class PetAdapter constructor(private var pets: List<PetModel>,
   override fun onBindViewHolder(holder: MainHolder, position: Int) {
     val pet = pets[holder.adapterPosition]
     holder.bind(pet, listener)
+  }
+
+  interface PetListener {
+    fun onPetClick(pet: PetModel)
   }
 
   override fun getItemCount(): Int = pets.size

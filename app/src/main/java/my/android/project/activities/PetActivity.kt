@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import kotlinx.android.synthetic.main.activity_pet.*
-
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.info
 import org.jetbrains.anko.intentFor
@@ -35,11 +34,11 @@ class PetActivity : AppCompatActivity(), AnkoLogger {
     info("Pet Activity started..")
 
     app = application as MainApp
-    var edit = false
+    var dec = false
 
-    if (intent.hasExtra("pet_edit")) {
-      edit = true
-      pet = intent.extras?.getParcelable<PetModel>("pet_edit")!!
+    if (intent.hasExtra("Dog dec")) {
+      dec = true
+      pet = intent.extras?.getParcelable<PetModel>("cat dec")!!
       petTitle.setText(pet.title)
       description.setText(pet.description)
       petImage.setImageBitmap(
@@ -60,7 +59,7 @@ class PetActivity : AppCompatActivity(), AnkoLogger {
       if (pet.title.isEmpty()) {
         toast(R.string.enter_pet_title)
       } else {
-        if (edit) {
+        if (dec) {
           app.pets.update(pet.copy())
         } else {
           app.pets.create(pet.copy())

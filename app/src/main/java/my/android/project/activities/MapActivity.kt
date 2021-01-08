@@ -22,20 +22,6 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarkerD
   private lateinit var map: GoogleMap
   var location = Location()
 
-  override fun onMapReady(googleMap: GoogleMap) {
-    map = googleMap
-    map.setOnMarkerDragListener(this)
-    map.setOnMarkerClickListener(this)
-    val loc = LatLng(location.lat, location.lng)
-    val options = MarkerOptions()
-      .title("Placemark")
-      .snippet("GPS : " + loc.toString())
-      .draggable(true)
-      .position(loc)
-    map.addMarker(options)
-    map.moveCamera(CameraUpdateFactory.newLatLngZoom(loc, location.zoom))
-  }
-
   override fun onMarkerDragStart(marker: Marker) {
   }
 
@@ -52,9 +38,9 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarkerD
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_map)
     location = intent.extras?.getParcelable<Location>("location")!!
-    val mapFragment = supportFragmentManager
+    val bit = supportFragmentManager
       .findFragmentById(R.id.map) as SupportMapFragment
-    mapFragment.getMapAsync(this)
+    bit.getMapAsync(this)
   }
 
   override fun onBackPressed() {
@@ -63,6 +49,20 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarkerD
     setResult(Activity.RESULT_OK, resultIntent)
     finish()
     super.onBackPressed()
+  }
+
+  override fun onMapReady(googleMap: GoogleMap) {
+    map = googleMap
+    map.setOnMarkerDragListener(this)
+    map.setOnMarkerClickListener(this)
+    val destination = LatLng(location.lat, location.lng)
+    val options = MarkerOptions()
+      .title("Missing_Pets")
+      .snippet("GPS : " + destination.toString())
+      .draggable(true)
+      .position(destination)
+    map.addMarker(options)
+    map.moveCamera(CameraUpdateFactory.newLatLngZoom(destination, location.zoom))
   }
 
   override fun onMarkerClick(marker: Marker): Boolean {

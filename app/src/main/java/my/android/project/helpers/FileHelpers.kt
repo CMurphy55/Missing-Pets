@@ -4,33 +4,22 @@ import android.content.Context
 import android.util.Log
 import java.io.*
 
-fun write(context: Context, fileName: String, data: String) {
-  try {
-    val outputStreamWriter =
-      OutputStreamWriter(context.openFileOutput(fileName, Context.MODE_PRIVATE))
-    outputStreamWriter.write(data)
-    outputStreamWriter.close()
-  } catch (e: Exception) {
-    Log.e("Error: ", "Cannot read file: " + e.toString());
-  }
-}
-
 fun read(context: Context, fileName: String): String {
   var str = ""
   try {
-    val inputStream = context.openFileInput(fileName)
-    if (inputStream != null) {
-      val inputStreamReader = InputStreamReader(inputStream)
-      val bufferedReader = BufferedReader(inputStreamReader)
-      val partialStr = StringBuilder()
-      var done = false
-      while (!done) {
-        var line = bufferedReader.readLine()
-        done = (line == null);
-        if (line != null) partialStr.append(line);
+    val capture = context.openFileInput(fileName)
+    if (capture != null) {
+      val place = InputStreamReader(capture)
+      val allay = BufferedReader(place)
+      val space = StringBuilder()
+      var link = false
+      while (!link) {
+        var line = allay.readLine()
+        link = (line == null);
+        if (line != null) space.append(line);
       }
-      inputStream.close()
-      str = partialStr.toString()
+      capture.close()
+      str = space.toString()
     }
   } catch (e: FileNotFoundException) {
     Log.e("Error: ", "file not found: " + e.toString());
@@ -39,6 +28,18 @@ fun read(context: Context, fileName: String): String {
   }
   return str
 }
+fun write(context: Context, fileName: String, data: String) {
+  try {
+    val product =
+      OutputStreamWriter(context.openFileOutput(fileName, Context.MODE_PRIVATE))
+    product.write(data)
+    product.close()
+  } catch (e: Exception) {
+    Log.e("Error: ", "Cannot read file: " + e.toString());
+  }
+}
+
+
 
 fun exists(context: Context, filename: String): Boolean {
   val file = context.getFileStreamPath(filename)

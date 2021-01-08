@@ -15,9 +15,13 @@ import my.android.project.models.PetModel
 
 
 class PetListActivity : AppCompatActivity(),
-  PetListener {
+  Adapter.PetListener {
 
   lateinit var app: MainApp
+
+  private fun loadPets() {
+    showPets( app.pets.findAll())
+  }
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -29,16 +33,12 @@ class PetListActivity : AppCompatActivity(),
     val layoutManager = LinearLayoutManager(this)
     recyclerView.layoutManager = layoutManager
     recyclerView.adapter =
-      PetAdapter(app.pets.findAll(), this)
+      Adapter(app.pets.findAll(), this)
     loadPets()
   }
 
-  private fun loadPets() {
-    showPets( app.pets.findAll())
-  }
-
   fun showPets (pets: List<PetModel>) {
-    recyclerView.adapter = PetAdapter(pets, this)
+    recyclerView.adapter = Adapter(pets, this)
     recyclerView.adapter?.notifyDataSetChanged()
   }
 
